@@ -22,8 +22,8 @@ services:
 
   postgres:
     build:
-      context: ./
-      dockerfile: Dockerfile.postgres
+      context: ./postgres
+      dockerfile: Dockerfile
     environment:
       - POSTGRES_PASSWORD=puppetdb
       - POSTGRES_USER=puppetdb
@@ -49,6 +49,28 @@ services:
       - puppet
     volumes:
       - ./volumes/puppetdb/ssl:/etc/puppetlabs/puppet/ssl/
+    networks:
+      default:
+      
+  puppetboard:
+    image: puppet/puppetboard
+    ports:
+      - 8000
+    networks:
+      default:
+
+  puppetexplorer:
+    image: puppet/puppetexplorer
+    ports:
+      - 80
+    read_only: true
+    networks:
+      default:
+
+  puppetagent:
+    build:
+      context: ./centos
+      dockerfile: Dockerfile
     networks:
       default:
 
