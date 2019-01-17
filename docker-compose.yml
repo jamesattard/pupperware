@@ -71,6 +71,8 @@ services:
     build:
       context: ./centos
       dockerfile: Dockerfile
+    depends_on:
+      - puppet
     networks:
       default:
 
